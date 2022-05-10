@@ -12,8 +12,9 @@ export class UserBuilder {
     return new UserBuilder();
   }
 
-  withUsername(username: string) {
+  withUsername(username: string): UserBuilder {
     this.username = username;
+    return this;
   }
 
   build(): User {

@@ -8,12 +8,14 @@ export class ItemBuilder {
     return new ItemBuilder();
   }
 
-  withName(name: string) {
+  withName(name: string): ItemBuilder {
     this.name = name;
+    return this;
   }
 
-  withPrice(price: string) {
+  withPrice(price: string): ItemBuilder {
     this.price = price;
+    return this;
   }
 
   build(): Item {
