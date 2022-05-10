@@ -1,3 +1,11 @@
-export const getAddCartDataTest = (itemName: string): string => {
-  return `data-test="${itemName.toLocaleLowerCase().replace(" ", "_")}"`;
+export const getAddItemToCartDataTest = (itemName: string): string => {
+  return `data-test=add-to-cart-${itemName
+    .toLocaleLowerCase()
+    .replaceAll(" ", "-")}`;
+};
+
+export const getRemoveItemFromCartDataTest = (itemName: string): string => {
+  return `data-test=add-to-cart-${itemName
+    .toLocaleLowerCase()
+    .replaceAll(" ", "-")}`;
 };

@@ -1,6 +1,6 @@
 import { Locator, Page } from "@playwright/test";
-import { User } from "../models/user.model";
-import { IPage } from "./abstract/page.interface";
+import { User } from "../../models/user.model";
+import { IPage } from "../abstract/page.interface";
 export class LoginPage implements IPage {
   private readonly usernameInput: Locator;
   private readonly passwordInput: Locator;
