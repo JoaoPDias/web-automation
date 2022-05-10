@@ -5,7 +5,7 @@ export const getAddItemToCartDataTest = (itemName: string): string => {
 };
 
 export const getRemoveItemFromCartDataTest = (itemName: string): string => {
-  return `data-test=add-to-cart-${itemName
+  return `data-test=remove-${itemName
     .toLocaleLowerCase()
     .replaceAll(" ", "-")}`;
 };

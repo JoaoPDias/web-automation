@@ -26,5 +26,9 @@ test.describe("Saucedemo Validations", () => {
     await Pages.Inventory.addToCart(ITEM_ONE);
     await Pages.Inventory.addToCart(ITEM_TWO);
     await Pages.Inventory.goToCart();
+    await Pages.Cart.removeItemFromCart(ITEM_TWO);
+    await Pages.Cart.goToCheckout();
+    await Pages.CheckoutInfo.fillForm();
+    await Pages.CheckoutInfo.submitForm();
   });
 });
