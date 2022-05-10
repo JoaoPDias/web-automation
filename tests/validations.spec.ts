@@ -30,5 +30,14 @@ test.describe("Saucedemo Validations", () => {
     await Pages.Cart.goToCheckout();
     await Pages.CheckoutInfo.fillForm();
     await Pages.CheckoutInfo.submitForm();
+    expect(await Pages.CheckoutOverview.getItemsList()).toHaveLength(1);
+    expect(await Pages.CheckoutOverview.getItemsList()).toContainEqual(
+      ITEM_ONE.name
+    );
+    expect(await Pages.CheckoutOverview.getItemTotalPrice()).toBe(
+      `Item total: $${ITEM_ONE.price}`
+    );
+    await Pages.CheckoutOverview.finishCheckout();
+    expect(await Pages.CheckoutOverview.getMessageConfirmation()).toBe('THANK YOU FOR YOUR ORDER');
   });
 });
