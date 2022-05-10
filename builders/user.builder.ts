@@ -5,8 +5,8 @@ The Builder Pattern can be used to mitigate the object creation process and cent
 It allows new fields to be added without compromising other code parts, because we can set default values for them.
 */
 export class UserBuilder {
-  username = "standard_user";
-  password = "secret_sauce";
+  private username = "standard_user";
+  private password = "secret_sauce";
 
   static new(): UserBuilder {
     return new UserBuilder();
