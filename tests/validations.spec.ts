@@ -4,6 +4,9 @@ import { UserBuilder } from "../builders/user.builder";
 import { PageFactory } from "../pages/factory/page.factory";
 
 const STANDARD_USER = UserBuilder.new().build();
+const LOCKED_OUT_USER = UserBuilder.new()
+  .withUsername("locked_out_user")
+  .build();
 /* 
 I could pick items in execution time through the XPath methods, but if I had done it, I would lose the control about the test. 
 The basis of e2e test is for a given input data, we have a expected result. 
@@ -38,6 +41,30 @@ test.describe("Saucedemo Validations", () => {
       `Item total: $${ITEM_ONE.price}`
     );
     await Pages.CheckoutOverview.finishCheckout();
-    expect(await Pages.CheckoutOverview.getMessageConfirmation()).toBe('THANK YOU FOR YOUR ORDER');
+    expect(await Pages.CheckoutOverview.getMessageConfirmation()).toBe(
+      "THANK YOU FOR YOUR ORDER"
+    );
+  });
+
+  test("should sort items by name(Z to A)", async () => {
+    await Pages.Login.login(STANDARD_USER);
+    await Pages.Inventory.sortItemsByName();
+    const actualItemsSorted = await Pages.Inventory.getItems();
+    const expectedItemsSorted = [...actualItemsSorted].sort((a, b) =>
+      b.localeCompare(a)
+    );
+    expect(actualItemsSorted).toStrictEqual(expectedItemsSorted);
+  });
+
+  test("should sort items by price(low to high)", async () => {
+    await Pages.Login.login(STANDARD_USER);
+    await Pages.Inventory.sortItemsByPrice();
+    const actualItemsSorted = await Pages.Inventory.getItemsPriceAscending();
+    const expectedItemsSorted = [...actualItemsSorted].sort((a, b) => a - b);
+    expect(actualItemsSorted).toStrictEqual(expectedItemsSorted);
+  });
+  test("should fail and take a screenshot", async ({ page }) => {
+    await Pages.Login.login(LOCKED_OUT_USER);
+    expect(page.url()).toBe("https://www.saucedemo.com/inventory.html");
   });
 });
