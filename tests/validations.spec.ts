@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { ItemBuilder } from "../builders/item.builder";
 import { UserBuilder } from "../builders/user.builder";
 import { PageFactory } from "../pages/factory/page.factory";
@@ -49,6 +49,9 @@ test.describe("Saucedemo Validations", () => {
   test("should sort items by name(Z to A)", async () => {
     await Pages.Login.login(STANDARD_USER);
     await Pages.Inventory.sortItemsByName();
+    /* Getting items using xPath represents the order that they are in screen, because the xPath maps the HTML DOM and there the elements are ordered by Name or Price, it depends on the action that was done.
+    Hence, we got the list of items displayed in browser and ordered in Typescript and compare them strictly, thus the beyond the value, the order that value is on array is evaluate in assertion.
+    */
     const actualItemsSorted = await Pages.Inventory.getItems();
     const expectedItemsSorted = [...actualItemsSorted].sort((a, b) =>
       b.localeCompare(a)
@@ -63,8 +66,10 @@ test.describe("Saucedemo Validations", () => {
     const expectedItemsSorted = [...actualItemsSorted].sort((a, b) => a - b);
     expect(actualItemsSorted).toStrictEqual(expectedItemsSorted);
   });
+
   test("should fail and take a screenshot", async ({ page }) => {
     await Pages.Login.login(LOCKED_OUT_USER);
+    //Here the test expects that the url changes after the login. But the user is locked out, therefore we got an error. 
     expect(page.url()).toBe("https://www.saucedemo.com/inventory.html");
   });
 });
