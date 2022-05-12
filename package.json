@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prepare": "husky install",
+    "postinstall": "npx playwright install",
     "test": "npx playwright test"
   },
   "keywords": [],
